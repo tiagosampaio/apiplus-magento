@@ -14,6 +14,17 @@
 trait TS_SimpleApi_Trait_Data
 {
 
+    use TS_SimpleApi_Trait_Config;
 
+
+    /**
+     * Get the common helper.
+     *
+     * @return TS_SimpleApi_Helper_Data
+     */
+    protected function helper()
+    {
+        return Mage::helper('ts_simpleapi');
+    }
 
 }

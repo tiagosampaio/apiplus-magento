@@ -11,9 +11,9 @@
  *
  * @author    Tiago Sampaio <tiago@tiagosampaio.com>
  */
-class TS_SimpleApi_Controller_Front_Action extends Mage_Core_Controller_Front_Action
+class TS_SimpleApi_ApiController extends TS_SimpleApi_Controller_Front_Action
 {
 
-    use TS_SimpleApi_Trait_Data;
+    
 
 }
