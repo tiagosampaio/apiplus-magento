@@ -1,0 +1,3 @@
+src/app/code/community/TS/SimpleApi         app/code/community/TS/SimpleApi
+src/app/etc/modules/TS_SimpleApi.xml        app/etc/modules/TS_SimpleApi.xml
+src/app/locale/en_US/TS/SimpleApi           app/locale/en_US/TS/SimpleApi
