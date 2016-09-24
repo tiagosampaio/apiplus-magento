@@ -25,18 +25,28 @@ class TS_SimpleApi_SimpleController extends TS_SimpleApi_Controller_Front_Action
         if (false == $user->authenticate($username, $key)) {
             $this->getResponse()->setHttpResponseCode(401);
             $this->getResponse()->sendHeadersAndExit();
+
             return;
+        }
+
+        $resource = $this->getRequest()->getPost('resource');
+
+        if (empty($resource)) {
+            $this->getResponse()->setHttpResponseCode(401);
+            $this->getResponse()->sendHeadersAndExit();
         }
 
         /** @var Mage_Api_Model_Session $session */
         $session = Mage::getSingleton('api/session');
         $session->setUser($user);
 
-        $resource = $this->getRequest()->getPost('resource');
+        try {
+            /** @var TS_SimpleApi_Model_Server_Handler $handler */
+            $handler = Mage::getModel('ts_simpleapi/server_handler');
+            $handler->callSimple($resource);
+        } catch (Exception $e) {
 
-        /** @var Mage_Api_Model_Server_Handler $handler */
-        $handler = Mage::getModel('api/server_handler');
-        $handler->call('xyz', $resource);
+        }
     }
 
 }
