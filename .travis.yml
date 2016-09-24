@@ -27,6 +27,6 @@ script:
 notifications:
   email:
     recipients:
-      - travis@fabrizio-branca.de
+      - tiago@tiagosampaio.com
     on_success: always
     on_failure: always
