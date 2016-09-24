@@ -17,33 +17,37 @@ class TS_SimpleApi_SimpleController extends TS_SimpleApi_Controller_Front_Action
     public function indexAction()
     {
         $username = $this->getRequest()->getHeader('apiUsername');
-        $key      = $this->getRequest()->getHeader('apiKey');
+        $apiKey   = $this->getRequest()->getHeader('apiKey');
 
         /** @var Mage_Api_Model_User $user */
         $user = Mage::getModel('api/user');
 
-        if (false == $user->authenticate($username, $key)) {
+        if (false == $user->authenticate($username, $apiKey)) {
             $this->getResponse()->setHttpResponseCode(401);
             $this->getResponse()->sendHeadersAndExit();
 
             return;
         }
 
-        $resource = $this->getRequest()->getPost('resource');
+        /** @var Mage_Api_Model_Session $session */
+        $session = Mage::getSingleton('api/session');
+        $session->login($username, $apiKey);
+
+        $resource = $this->getRequest()->getPost('resource', null);
+        $args     = $this->getRequest()->getPost('args', array());
 
         if (empty($resource)) {
             $this->getResponse()->setHttpResponseCode(401);
             $this->getResponse()->sendHeadersAndExit();
         }
 
-        /** @var Mage_Api_Model_Session $session */
-        $session = Mage::getSingleton('api/session');
-        $session->setUser($user);
-
         try {
             /** @var TS_SimpleApi_Model_Server_Handler $handler */
             $handler = Mage::getModel('ts_simpleapi/server_handler');
-            $handler->callSimple($resource);
+            $result  = $handler->callSimple($resource, $args);
+
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(Zend_Json_Encoder::encode($result));
         } catch (Exception $e) {
 
         }

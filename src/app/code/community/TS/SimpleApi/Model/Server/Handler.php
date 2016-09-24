@@ -25,7 +25,7 @@ class TS_SimpleApi_Model_Server_Handler extends Mage_Api_Model_Server_Handler
     public function callSimple($apiPath, $args = array())
     {
         list($resourceName, $methodName) = explode('.', $apiPath);
-        
+
         if (empty($resourceName) || empty($methodName)) {
             return $this->_fault('resource_path_invalid');
         }
