@@ -16,4 +16,10 @@ class TS_SimpleApi_Controller_Front_Action extends Mage_Core_Controller_Front_Ac
 
     use TS_SimpleApi_Trait_Data;
 
+
+    public function preDispatch()
+    {
+        parent::preDispatch();
+    }
+
 }

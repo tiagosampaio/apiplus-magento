@@ -1,4 +1,4 @@
-<?xml encoding="utf-8" version="1.0"?>
+<?xml version="1.0"?>
 <!--
 /**
  * Tiago Sampaio
@@ -46,6 +46,15 @@
                 </ts_simpleapi>
             </modules>
         </translate>
+        <routers>
+            <api>
+                <args>
+                    <modules>
+                        <ts_simpleapi before="Mage_Api">TS_SimpleApi</ts_simpleapi>
+                    </modules>
+                </args>
+            </api>
+        </routers>
     </frontend>
     <adminhtml>
         <translate>
