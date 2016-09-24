@@ -11,10 +11,10 @@
  *
  * @author    Tiago Sampaio <tiago@tiagosampaio.com>
  */
-class TS_SimpleApi_SimpleController extends TS_SimpleApi_Controller_Front_Action
+class TS_ApiPlus_JsonController extends TS_ApiPlus_Controller_Front_Action
 {
 
-    public function indexAction()
+    public function callAction()
     {
         $username = $this->getRequest()->getHeader('apiUsername');
         $apiKey   = $this->getRequest()->getHeader('apiKey');
@@ -42,8 +42,8 @@ class TS_SimpleApi_SimpleController extends TS_SimpleApi_Controller_Front_Action
         }
 
         try {
-            /** @var TS_SimpleApi_Model_Server_Handler $handler */
-            $handler = Mage::getModel('ts_simpleapi/server_handler');
+            /** @var TS_ApiPlus_Model_Server_Handler $handler */
+            $handler = Mage::getModel('ts_apiplus/server_handler');
             $result  = $handler->callSimple($resource, $args);
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
