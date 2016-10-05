@@ -17,9 +17,19 @@ class TS_ApiPlus_Controller_Front_Action extends Mage_Core_Controller_Front_Acti
     use TS_ApiPlus_Trait_Data;
 
 
-    public function preDispatch()
+    /**
+     * @param int  $code
+     * @param null $message
+     *
+     * @return void
+     *
+     * @throws Zend_Controller_Response_Exception
+     */
+    protected function sendHttpResponse($code, $message = null)
     {
-        parent::preDispatch();
+        $this->getResponse()->setHttpResponseCode($code);
+        $this->getResponse()->setBody(Zend_Json_Encoder::encode(array('result' => $message)));
+        $this->getResponse()->sendHeadersAndExit();
     }
 
 }

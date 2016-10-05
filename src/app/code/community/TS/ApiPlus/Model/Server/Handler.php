@@ -27,6 +27,7 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
         list($resourceName, $methodName) = explode('.', $apiPath);
 
         if (empty($resourceName) || empty($methodName)) {
+            /** @todo Return 404 */
             return $this->_fault('resource_path_invalid');
         }
         
@@ -36,14 +37,15 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
             $resourceName = (string) $resourcesAlias->$resourceName;
         }
         
-        if (!isset($resources->$resourceName)
-            || !isset($resources->$resourceName->methods->$methodName)) {
+        if (!isset($resources->$resourceName) || !isset($resources->$resourceName->methods->$methodName)) {
+            /** @todo Return 404 */
             return $this->_fault('resource_path_invalid');
         }
         
         if (!isset($resources->$resourceName->public)
             && isset($resources->$resourceName->acl)
             && !$this->_isAllowed((string)$resources->$resourceName->acl)) {
+            /** @todo Return 503 */
             return $this->_fault('access_denied');
             
         }
@@ -52,6 +54,7 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
         if (!isset($resources->$resourceName->methods->$methodName->public)
             && isset($resources->$resourceName->methods->$methodName->acl)
             && !$this->_isAllowed((string)$resources->$resourceName->methods->$methodName->acl)) {
+            /** @todo Return 503 */
             return $this->_fault('access_denied');
         }
         
@@ -67,6 +70,7 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
                     $model->setResourceConfig($resources->$resourceName);
                 }
             } catch (Exception $e) {
+                /** @todo Return 503 */
                 throw new Mage_Api_Exception('resource_path_not_callable');
             }
             
@@ -79,12 +83,14 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
                     return call_user_func_array(array(&$model, $method), $args);
                 }
             } else {
+                /** @todo Return 503 */
                 throw new Mage_Api_Exception('resource_path_not_callable');
             }
         } catch (Mage_Api_Exception $e) {
             return $this->_fault($e->getMessage(), $resourceName, $e->getCustomMessage());
         } catch (Exception $e) {
             Mage::logException($e);
+            /** @todo Return 503 */
             return $this->_fault('internal', null, $e->getMessage());
         }
     }

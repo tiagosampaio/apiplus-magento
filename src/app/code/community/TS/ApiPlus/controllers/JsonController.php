@@ -23,22 +23,23 @@ class TS_ApiPlus_JsonController extends TS_ApiPlus_Controller_Front_Action
         $user = Mage::getModel('api/user');
 
         if (false == $user->authenticate($username, $apiKey)) {
-            $this->getResponse()->setHttpResponseCode(401);
-            $this->getResponse()->sendHeadersAndExit();
-
-            return;
+            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED);
         }
 
         /** @var Mage_Api_Model_Session $session */
         $session = Mage::getSingleton('api/session');
         $session->login($username, $apiKey);
 
-        $resource = $this->getRequest()->getPost('resource', null);
-        $args     = $this->getRequest()->getPost('args', array());
+        /** @var string $request */
+        $request = file_get_contents('php://input');
+
+        /** @var stdClass $json */
+        $json     = Zend_Json_Decoder::decode($request, Zend_Json::TYPE_OBJECT);
+        $resource = (string) $json->resource;
+        $args     = $json->args ?: null;
 
         if (empty($resource)) {
-            $this->getResponse()->setHttpResponseCode(401);
-            $this->getResponse()->sendHeadersAndExit();
+            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         try {
@@ -49,7 +50,7 @@ class TS_ApiPlus_JsonController extends TS_ApiPlus_Controller_Front_Action
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Zend_Json_Encoder::encode($result));
         } catch (Exception $e) {
-
+            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
