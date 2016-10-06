@@ -18,6 +18,33 @@ trait TS_ApiPlus_Trait_Data
 
 
     /**
+     * @return TS_ApiPlus_Model_Server_Handler
+     */
+    protected function getApiServerHandler()
+    {
+        return Mage::getSingleton('ts_apiplus/server_handler');
+    }
+
+
+    /**
+     * @return TS_ApiPlus_Model_Http_Request
+     */
+    protected function getApiRequest()
+    {
+        return Mage::getSingleton('ts_apiplus/http_request');
+    }
+
+
+    /**
+     * @return TS_ApiPlus_Model_Http_Response
+     */
+    protected function getApiResponse()
+    {
+        return Mage::getSingleton('ts_apiplus/http_response');
+    }
+
+
+    /**
      * Get the common helper.
      *
      * @return TS_ApiPlus_Helper_Data

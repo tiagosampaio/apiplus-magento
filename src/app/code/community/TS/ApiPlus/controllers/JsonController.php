@@ -14,58 +14,9 @@
 class TS_ApiPlus_JsonController extends TS_ApiPlus_Controller_Front_Action
 {
 
-    public function callAction()
+    public function indexAction()
     {
-        $username = (string) $this->getRequest()->getHeader('apiUsername');
-        $apiKey   = (string) $this->getRequest()->getHeader('apiKey');
-
-        /** @var Mage_Api_Model_User $user */
-        $user = Mage::getModel('api/user');
-
-        if (false == $user->authenticate($username, $apiKey)) {
-            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED);
-        }
-
-        if ($user->getId() && $user->getIsActive() != '1') {
-            $message = $this->helper()->__('Your account has been deactivated.');
-            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
-        } elseif (!Mage::getModel('api/user')->hasAssigned2Role($user->getId())) {
-            $message = $this->helper()->__('Access denied.');
-            $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
-        } else {
-            if (!$user->getId()) {
-                $message = $this->helper()->__('Unable to login.');
-                $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
-            }
-        }
-
-        /** @var Mage_Api_Model_Session $session */
-        $session = Mage::getSingleton('api/session');
-        $session->setData('user', $user);
-        $session->setData('acl',  Mage::getResourceModel('api/acl')->loadAcl());
-
-        try {
-            /** @var string $request */
-            $request = file_get_contents('php://input');
-
-            /** @var stdClass $json */
-            $json     = Zend_Json_Decoder::decode($request, Zend_Json::TYPE_OBJECT);
-            $resource = (string) $json->resource;
-            $args     = $json->args ?: null;
-
-            if (empty($resource)) {
-                $this->sendHttpResponse(TS_ApiPlus_Model_Http_Response::HTTP_BAD_REQUEST);
-            }
-
-            /** @var TS_ApiPlus_Model_Server_Handler $handler */
-            $handler = Mage::getModel('ts_apiplus/server_handler');
-            $result  = $handler->callSimple($resource, $args);
-
-            $this->getResponse()->setHeader('Content-type', 'application/json', true);
-            $this->getResponse()->setBody(Zend_Json_Encoder::encode($result));
-        } catch (Exception $e) {
-            $this->sendHttpResponse($e->getCode(), $e->getMessage());
-        }
+        $this->getApiRequest()->dispatch();
     }
 
 }
