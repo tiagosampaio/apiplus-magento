@@ -13,5 +13,64 @@
  */
 trait TS_ApiPlus_Trait_Config
 {
-    
+
+    /**
+     * @param string                    $section
+     * @param string                    $group
+     * @param string                    $field
+     * @param int|Mage_Core_Model_Store $store
+     *
+     * @return mixed
+     */
+    protected function getGlobalConfig($section, $group, $field, $store = null)
+    {
+        $configPath = implode('/', array($section, $group, $field));
+        return Mage::getStoreConfig($configPath, $store);
+    }
+
+
+    /**
+     * @param string                    $field
+     * @param int|Mage_Core_Model_Store $store
+     *
+     * @return mixed
+     */
+    protected function getApiPlusConfig($field, $store = null)
+    {
+        return $this->getGlobalConfig('api', 'api_plus', $field, $store);
+    }
+
+
+    /**
+     * @param Mage_Core_Model_Store $store
+     *
+     * @return bool
+     */
+    protected function isEnabled($store = null)
+    {
+        return (bool) $this->getApiPlusConfig('enabled', $store);
+    }
+
+
+    /**
+     * @param Mage_Core_Model_Store $store
+     *
+     * @return bool
+     */
+    protected function isResultCacheEnabled($store = null)
+    {
+        return (bool) $this->getApiPlusConfig('cache_enabled', $store);
+    }
+
+
+    /**
+     * @param Mage_Core_Model_Store $store
+     *
+     * @return int
+     */
+    protected function getResultCacheLifetime($store = null)
+    {
+        return (int) $this->getApiPlusConfig('cache_lifetime', $store);
+    }
+
 }

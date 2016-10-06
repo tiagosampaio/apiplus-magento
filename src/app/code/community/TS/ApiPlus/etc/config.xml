@@ -35,6 +35,15 @@
                 <class>TS_ApiPlus_Helper</class>
             </ts_apiplus>
         </helpers>
+        <cache>
+            <types>
+                <api_plus_results translate="label,description" module="ts_apiplus">
+                    <label>API Plus Results</label>
+                    <description>API Plus Results will be cached if this option and API Plus config are enabled (System > Configuration > Api > API Plus Settings).</description>
+                    <tags>API_PLUS_RESULTS</tags>
+                </api_plus_results>
+            </types>
+        </cache>
     </global>
     <frontend>
         <translate>
@@ -71,6 +80,8 @@
         <api>
             <api_plus>
                 <enabled>1</enabled>
+                <cache_enabled>1</cache_enabled>
+                <cache_lifetime>7200</cache_lifetime>
             </api_plus>
         </api>
     </default>

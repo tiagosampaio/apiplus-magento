@@ -45,6 +45,32 @@ trait TS_ApiPlus_Trait_Data
 
 
     /**
+     * @return bool
+     */
+    protected function canUserResultCache()
+    {
+        if (!$this->isResultCacheEnabled()) {
+            return false;
+        }
+
+        if (!$this->getCoreCacheInstance()->canUse('api_plus_results')) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * @return Mage_Core_Model_Cache
+     */
+    protected function getCoreCacheInstance()
+    {
+        return Mage::getSingleton('core/cache');
+    }
+
+
+    /**
      * Get the common helper.
      *
      * @return TS_ApiPlus_Helper_Data

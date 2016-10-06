@@ -14,8 +14,7 @@
 class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
 {
 
-    use TS_ApiPlus_Trait_Data,
-        TS_ApiPlus_Trait_Config;
+    use TS_ApiPlus_Trait_Data;
 
 
     /**

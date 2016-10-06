@@ -16,7 +16,15 @@ class TS_ApiPlus_Model_Config extends Mage_Api_Model_Config
 
     use TS_ApiPlus_Trait_Data;
 
+    /** @var string */
+    const CACHE_TAG = 'API_PLUS_RESULTS';
 
+
+    /**
+     * @param string|null $resourceName
+     *
+     * @return array
+     */
     public function getFaults($resourceName = null)
     {
         if (is_null($resourceName)

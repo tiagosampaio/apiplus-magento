@@ -77,10 +77,17 @@ class TS_ApiPlus_Model_Http_Request
         try {
             $this->validate();
 
-            $result = $this->getApiServerHandler()->callSimple($this->getResource(), $this->getArgs());
+            $result = $this->getResultFromCache();
+
+            if ((false === $result) || empty($result)) {
+                $result = $this->getApiServerHandler()->callSimple($this->getResource(), $this->getArgs());
+                $result = Zend_Json_Encoder::encode($result);
+
+                $this->saveResultInCache($result);
+            }
 
             $this->getHttpResponse()->setHeader('Content-type', 'application/json', true);
-            $this->getHttpResponse()->setBody(Zend_Json_Encoder::encode($result));
+            $this->getHttpResponse()->setBody($result);
         } catch (Exception $e) {
             $this->sendHttpErrorResponse($e->getCode(), $e->getMessage());
         }
@@ -149,6 +156,52 @@ class TS_ApiPlus_Model_Http_Request
         }
 
         return $this->_args;
+    }
+
+
+    /**
+     * @return bool|string
+     */
+    protected function getResultFromCache()
+    {
+        if (!$this->canUserResultCache()) {
+            return false;
+        }
+
+        $result = $this->getCoreCacheInstance()->load($this->getCacheKey());
+
+        return $result;
+    }
+
+
+    /**
+     * @param string $result
+     *
+     * @return $this
+     */
+    protected function saveResultInCache($result)
+    {
+        if (!$this->canUserResultCache()) {
+            return $this;
+        }
+
+        $tags     = array(TS_ApiPlus_Model_Config::CACHE_TAG);
+        $lifeTime = $this->getResultCacheLifetime();
+
+        $this->getCoreCacheInstance()->save($result, $this->getCacheKey(), $tags, $lifeTime);
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function getCacheKey()
+    {
+        $prefix   = 'ts_apiplus_';
+        $cacheKey = md5($this->getData());
+        return $prefix . $cacheKey;
     }
 
 
