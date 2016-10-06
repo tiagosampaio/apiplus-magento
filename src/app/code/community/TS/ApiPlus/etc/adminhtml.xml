@@ -46,6 +46,7 @@
                                 <configuration translate="title" module="ts_apiplus">
                                     <title>Configuration</title>
                                     <sort_order>10</sort_order>
+                                    <action>adminhtml/system_config/edit/section/api</action>
                                 </configuration>
                             </children>
                         </api_plus>
