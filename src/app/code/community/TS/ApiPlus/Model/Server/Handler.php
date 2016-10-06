@@ -13,7 +13,11 @@
  */
 class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
 {
-    
+
+    use TS_ApiPlus_Trait_Data,
+        TS_ApiPlus_Trait_Config;
+
+
     /**
      * Call resource functionality
      *
@@ -28,7 +32,8 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
 
         if (empty($resourceName) || empty($methodName)) {
             /** @todo Return 404 */
-            return $this->_fault('resource_path_invalid');
+            $this->_fault('resource_path_invalid');
+            return $this;
         }
         
         $resourcesAlias = $this->_getConfig()->getResourcesAlias();
@@ -39,15 +44,15 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
         
         if (!isset($resources->$resourceName) || !isset($resources->$resourceName->methods->$methodName)) {
             /** @todo Return 404 */
-            return $this->_fault('resource_path_invalid');
+            $this->_fault('resource_path_invalid');
+            return $this;
         }
         
         if (!isset($resources->$resourceName->public)
             && isset($resources->$resourceName->acl)
             && !$this->_isAllowed((string)$resources->$resourceName->acl)) {
             /** @todo Return 503 */
-            return $this->_fault('access_denied');
-            
+            $this->_fault('access_denied');
         }
         
         
@@ -55,17 +60,18 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
             && isset($resources->$resourceName->methods->$methodName->acl)
             && !$this->_isAllowed((string)$resources->$resourceName->methods->$methodName->acl)) {
             /** @todo Return 503 */
-            return $this->_fault('access_denied');
+            $this->_fault('access_denied');
         }
         
         $methodInfo = $resources->$resourceName->methods->$methodName;
         
         try {
-            $method = (isset($methodInfo->method) ? (string) $methodInfo->method : $methodName);
-            
+            $method    = (isset($methodInfo->method) ? (string) $methodInfo->method : $methodName);
             $modelName = $this->_prepareResourceModelName((string) $resources->$resourceName->model);
+
             try {
                 $model = Mage::getModel($modelName);
+
                 if ($model instanceof Mage_Api_Model_Resource_Abstract) {
                     $model->setResourceConfig($resources->$resourceName);
                 }
@@ -87,12 +93,71 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
                 throw new Mage_Api_Exception('resource_path_not_callable');
             }
         } catch (Mage_Api_Exception $e) {
-            return $this->_fault($e->getMessage(), $resourceName, $e->getCustomMessage());
+            $this->_fault($e->getMessage(), $resourceName, $e->getCustomMessage());
         } catch (Exception $e) {
             Mage::logException($e);
             /** @todo Return 503 */
-            return $this->_fault('internal', null, $e->getMessage());
+            $this->_fault('internal', null, $e->getMessage());
         }
+
+        return $this;
+    }
+
+
+    /**
+     * Dispatch webservice fault
+     *
+     * @param string $faultName
+     * @param string $resourceName
+     * @param string $customMessage
+     */
+    protected function _fault($faultName, $resourceName = null, $customMessage = null)
+    {
+        $faults = $this->_getConfig()->getFaults($resourceName);
+
+        if (isset($faults[$faultName])) {
+            $fault = (array) $faults[$faultName];
+        } else {
+            $fault = (array) $faults['unknown'];
+        }
+
+        $httpCode = isset($fault['http_code']) ? $fault['http_code'] : $this->_getDefaultHttpErrorCode();
+        $message  = isset($fault['message'])   ? $fault['message']   : $this->_getDefaultHttpErrorMessage();
+
+        if (!is_null($customMessage)) {
+            $message = $customMessage;
+        }
+
+        throw Mage::exception('TS_ApiPlus', $message, $httpCode);
+    }
+
+
+    /**
+     * @return int
+     */
+    protected function _getDefaultHttpErrorCode()
+    {
+        return TS_ApiPlus_Model_Http_Response::HTTP_INTERNAL_SERVER_ERROR;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function _getDefaultHttpErrorMessage()
+    {
+        return $this->helper()->__('There was a problem in the request.');
+    }
+
+
+    /**
+     * Retrieve webservice configuration
+     *
+     * @return TS_ApiPlus_Model_Config
+     */
+    protected function _getConfig()
+    {
+        return Mage::getSingleton('ts_apiplus/config');
     }
 
 }
