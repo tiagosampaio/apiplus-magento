@@ -10,17 +10,11 @@ php:
 matrix:
   include:
     - php: 5.3
-      env: WP_TRAVISCI=travis:phpunit
     - php: 5.4
-      env: WP_TRAVISCI=travis:phpunit
     - php: 5.5
-      env: WP_TRAVISCI=travis:phpunit
     - php: 5.5
-      env: WP_TRAVISCI=travis:phpunit
     - php: hhvm
-      env: WP_TRAVISCI=travis:phpunit
     - php: php-fpm
-      env: WP_TRAVISCI=travis:phpunit
   allow_failures:
     - php: hhvm
     - php: php-fpm
