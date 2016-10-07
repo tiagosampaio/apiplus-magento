@@ -24,7 +24,7 @@ before_install:
   - sudo apt-get update > /dev/null
 
 script:
-  - bash ./setup/install.sh
+  - bash ./setup/run.sh
   
 notifications:
   email:

@@ -18,7 +18,7 @@ sudo mv n98-magerun.phar /usr/local/bin/
 
 mkdir -p ${BUILDENV}/htdocs
 
-n98-magerun.phar install \
+sudo n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
       --useDefaultConfigParams=yes \
@@ -28,4 +28,4 @@ n98-magerun.phar install \
 
 cd ${BUILDENV}/htdocs
 
-modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
+sudo modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
