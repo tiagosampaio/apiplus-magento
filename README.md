@@ -89,4 +89,4 @@ If you need to send any arguments, like you do in SOAP request for some resource
 
 ## Links
 
-Will be added soon :)
+[Novo Módulo Magento para Integração com API: API Plus!](http://tiagosampaio.com/novo-modulo-magento-para-integracao-com-api-api-plus/)
