@@ -10,7 +10,7 @@ cd ${BUILDENV}
 
 # Installing Modman
 curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
-mv n98-magerun.phar /usr/local/bin/
+mv modman /usr/local/bin/
 
 #Installing n98-magerun
 curl -sO https://files.magerun.net/n98-magerun.phar
