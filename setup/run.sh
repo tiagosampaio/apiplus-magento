@@ -22,16 +22,14 @@ echo "Using build directory ${BUILDENV}"
 
 cd ${BUILDENV}
 
-mkdir -p ${BUILDENV}/htdocs
-
-php n98-magerun.phar install \
+php ${BIN}/n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
       --useDefaultConfigParams=yes \
       --magentoVersionByName="${MAGENTO_VERSION}" \
-      --installationFolder="${BUILDENV}/htdocs" \
+      --installationFolder="${BUILDENV}" \
       --baseUrl="http://magento.local/" || { echo "Installing Magento failed"; exit 1; }
 
 cd ${BUILDENV}/htdocs
 
-modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
+sh ${BIN}/modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
