@@ -1,4 +1,3 @@
-sudo: false
 language: php
 php:
   - 5.3
@@ -8,17 +7,17 @@ php:
   - hhvm
   - php-fpm
 matrix:
-  include:
-    - php: 5.3
-    - php: 5.4
-    - php: 5.5
-    - php: 5.5
-    - php: hhvm
-    - php: php-fpm
   allow_failures:
     - php: hhvm
     - php: php-fpm
   fast_finish: true
+env:
+  - MAGENTO_VERSION=magento-ce-1.9.2.4
+  - MAGENTO_VERSION=magento-ce-1.8.1.0
+  - MAGENTO_VERSION=magento-ce-1.8.0.0
+  - MAGENTO_VERSION=magento-ce-1.7.0.2
+script:
+  - curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
 notifications:
   email:
     recipients:
