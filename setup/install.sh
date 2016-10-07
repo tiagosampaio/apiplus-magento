@@ -16,7 +16,9 @@ curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
 echo "Cloning n98-magerun"
 curl -sO https://files.magerun.net/n98-magerun.phar
 
-../n98-magerun.phar install \
+mkdir -p ${BUILDENV}/htdocs
+
+n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
       --useDefaultConfigParams=yes \
