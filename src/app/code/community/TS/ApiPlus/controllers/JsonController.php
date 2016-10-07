@@ -8,6 +8,7 @@
  * @package   TS_SimpleApi
  *
  * @copyright Copyright (c) 2016 Tiago Sampaio. (http://tiagosampaio.com)
+ * @license   https://opensource.org/licenses/MIT The MIT License
  *
  * @author    Tiago Sampaio <tiago@tiagosampaio.com>
  */
