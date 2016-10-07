@@ -13,7 +13,7 @@ env:
     - SKIP_CLEANUP=1
     - TEST_BASEDIR=.modman/ApiPlus/dev/tests/apiplus
   matrix:
-    - MAGENTO_VERSION=magento-mirror-1.9.2.1
+    - MAGENTO_VERSION=magento-mirror-1.9.0.1
 script:
   - curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
 notifications:
