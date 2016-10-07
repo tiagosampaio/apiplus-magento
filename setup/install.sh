@@ -18,7 +18,7 @@ curl -sO https://files.magerun.net/n98-magerun.phar
 
 mkdir -p ${BUILDENV}/htdocs
 
-n98-magerun.phar install \
+php ./n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
       --useDefaultConfigParams=yes \
