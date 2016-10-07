@@ -10,11 +10,11 @@ cd ${BUILDENV}
 
 # Installing Modman
 curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
-mv modman /usr/local/bin/
+sudo mv modman /usr/local/bin/
 
 #Installing n98-magerun
 curl -sO https://files.magerun.net/n98-magerun.phar
-mv n98-magerun.phar /usr/local/bin/
+sudo mv n98-magerun.phar /usr/local/bin/
 
 mkdir -p ${BUILDENV}/htdocs
 
