@@ -6,6 +6,7 @@ matrix:
     - php: hhvm
     - php: php-fpm
   fast_finish: true
+  
 env:
   global:
     - MAGENTO_DB_ALLOWSAME=1
@@ -13,8 +14,7 @@ env:
     - TEST_BASEDIR=.modman/ApiPlus/dev/tests/apiplus
   matrix:
     - MAGENTO_VERSION=magento-mirror-1.9.2.1
-services:
-  - mysql
+    
 mysql:
   database: magento
   username: root
@@ -25,6 +25,7 @@ before_install:
 
 script:
   - bash ./setup/install.sh
+  
 notifications:
   email:
     recipients:
