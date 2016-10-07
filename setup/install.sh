@@ -28,4 +28,4 @@ php ./n98-magerun.phar install \
 
 cd ${BUILDENV}/htdocs
 
-../modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
+sh ../modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
