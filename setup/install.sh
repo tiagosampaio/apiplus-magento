@@ -9,16 +9,16 @@ echo "Using build directory ${BUILDENV}"
 cd ${BUILDENV}
 
 # Installing Modman
-echo "Cloning modman"
 curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
+mv n98-magerun.phar /usr/local/bin/
 
 #Installing n98-magerun
-echo "Cloning n98-magerun"
 curl -sO https://files.magerun.net/n98-magerun.phar
+mv n98-magerun.phar /usr/local/bin/
 
 mkdir -p ${BUILDENV}/htdocs
 
-php ./n98-magerun.phar install \
+n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
       --useDefaultConfigParams=yes \
@@ -28,4 +28,4 @@ php ./n98-magerun.phar install \
 
 cd ${BUILDENV}/htdocs
 
-sh ../modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
+modman clone --copy https://github.com/tiagosampaio/ApiPlus.git
