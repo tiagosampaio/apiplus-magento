@@ -16,6 +16,23 @@ env:
     - TEST_BASEDIR=.modman/ApiPlus/dev/tests/apiplus
   matrix:
     - MAGENTO_VERSION=magento-mirror-1.9.2.1
+    - MAGENTO_VERSION=CE-1.9.2.4
+services:
+  - mysql
+mysql:
+  database: magento
+  username: root
+  encoding: utf8
+
+before_install:
+  - sudo apt-get update > /dev/null
+
+install:
+  - BUILDENV=`mktemp -d /tmp/magento.XXXXXXXX`
+  - echo "Using build directory ${BUILDENV}"
+  - git clone https://github.com/tiagosampaio/Magento-${MAGENTO_VERSION}.git ${BUILDENV}
+  - echo "Clone was successfully done in ${BUILDENV}"
+
 script:
   - curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
 notifications:
