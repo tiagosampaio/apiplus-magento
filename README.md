@@ -1,6 +1,10 @@
 # API Plus for Magento
 
 [![Build Status](https://travis-ci.org/tiagosampaio/ApiPlus.svg?branch=master)](https://travis-ci.org/tiagosampaio/ApiPlus)
+[![GitHub license](https://img.shields.io/badge/version-0.1.0.1-blue.svg)](#)
+[![GitHub issues](https://img.shields.io/github/issues/tiagosampaio/ApiPlus.svg)](https://github.com/tiagosampaio/ApiPlus/issues)
+[![GitHub forks](https://img.shields.io/github/forks/tiagosampaio/ApiPlus.svg)](https://github.com/tiagosampaio/ApiPlus/network)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/tiagosampaio/ApiPlus/master/LICENSE.txt)
 
 Rather than using (slow) SOAP to make calls to Magento's API why not to simply send a *POST* to an endpoint provinding your authentication data in request header and a JSON-encoded body with the resource name you want to consume and arguments needed for the call?
 
