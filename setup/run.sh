@@ -8,10 +8,11 @@ echo "Using build directory ${BUILDENV}"
 
 cd ${BUILDENV}
 
-curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
-curl -sO https://files.magerun.net/n98-magerun.phar
+bash < <(curl -s -L https://raw.github.com/colinmollenhour/modman/master/modman-installer)
 
-ls -lah
+source ${HOME}/.profile
+
+curl -sO https://files.magerun.net/n98-magerun.phar
 
 php ./n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
