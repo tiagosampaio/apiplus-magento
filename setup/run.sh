@@ -1,18 +1,10 @@
 #!/bin/bash
 
-# git clone https://github.com/tiagosampaio/Magento-${MAGENTO_VERSION}.git ${BUILDENV}
-# echo "Clone was successfully done in ${BUILDENV}"
-
-echo "Installing modman..."
 bash < <(curl -s -L https://raw.github.com/colinmollenhour/modman/master/modman-installer)
 
 source ${HOME}/.profile
 
-ls -lah ${HOME}
-ls -lah
-
 BUILDENV=`mktemp -d /tmp/magento.XXXXXXXX`
-echo "Using build directory ${BUILDENV}"
 
 cd ${BUILDENV}
 
@@ -28,4 +20,5 @@ php ./n98-magerun.phar install \
 
 sudo chmod +x modman
 
+modman init
 modman link --copy ${TRAVIS_BUILD_DIR}
