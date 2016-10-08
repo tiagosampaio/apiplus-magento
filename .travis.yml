@@ -13,6 +13,9 @@ env:
     - SKIP_CLEANUP=1
     - TEST_BASEDIR=.modman/ApiPlus/dev/tests/apiplus
   matrix:
+    - MAGENTO_VERSION=magento-mirror-1.9.2.4
+    - MAGENTO_VERSION=magento-mirror-1.9.2.3
+    - MAGENTO_VERSION=magento-mirror-1.9.2.2
     - MAGENTO_VERSION=magento-mirror-1.9.2.1
 
 mysql:
