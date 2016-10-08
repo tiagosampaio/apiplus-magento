@@ -25,7 +25,6 @@ Author:
 ## Compability
 
 - PHP: 
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
