@@ -25,4 +25,4 @@ modman link --copy ${TRAVIS_BUILD_DIR}
 
 TESTSENV=${TRAVIS_BUILD_DIR}/dev/tests/apiplus
 
-phpunit --bootstrap.php ${TESTSENV}/bootstrap.php ${TESTSENV}/tests
+phpunit --bootstrap ${TESTSENV}/bootstrap.php ${TESTSENV}/tests

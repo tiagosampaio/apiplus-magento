@@ -14,7 +14,7 @@ env:
     - TEST_BASEDIR=.modman/ApiPlus/dev/tests/apiplus
   matrix:
     - MAGENTO_VERSION=magento-mirror-1.9.2.1
-    
+
 mysql:
   database: magento
   username: root
