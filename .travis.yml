@@ -20,9 +20,6 @@ mysql:
   username: root
   encoding: utf8
 
-before_install:
-  - sudo apt-get update > /dev/null
-
 script:
   - bash ./setup/run.sh
   
