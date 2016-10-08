@@ -8,10 +8,7 @@ echo "Using build directory ${BUILDENV}"
 
 cd ${BUILDENV}
 
-# Installing Modman
 curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
-
-#Installing n98-magerun
 curl -sO https://files.magerun.net/n98-magerun.phar
 
 php ./n98-magerun.phar install \
@@ -21,5 +18,7 @@ php ./n98-magerun.phar install \
       --magentoVersionByName="${MAGENTO_VERSION}" \
       --installationFolder="${BUILDENV}" \
       --baseUrl="http://magento.local/" || { echo "Installing Magento failed"; exit 1; }
+
+sudo chmod +x modman
 
 sh ./modman link --copy ${TRAVIS_BUILD_DIR}
