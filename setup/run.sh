@@ -11,6 +11,8 @@ cd ${BUILDENV}
 curl -sO https://raw.github.com/colinmollenhour/modman/master/modman
 curl -sO https://files.magerun.net/n98-magerun.phar
 
+ls -lah
+
 php ./n98-magerun.phar install \
       --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="magento" \
       --installSampleData=no \
@@ -21,4 +23,6 @@ php ./n98-magerun.phar install \
 
 sudo chmod +x modman
 
-sh ./modman link --copy ${TRAVIS_BUILD_DIR}
+ls -lah
+
+sh modman link --copy ${TRAVIS_BUILD_DIR}
