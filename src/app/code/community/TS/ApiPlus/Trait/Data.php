@@ -78,7 +78,57 @@ trait TS_ApiPlus_Trait_Data
      */
     protected function helper()
     {
-        return Mage::helper('ts_simpleapi');
+        return Mage::helper('ts_apiplus');
+    }
+
+
+    /**
+     * Retrieve the class group of the self object.
+     *
+     * @return string
+     */
+    protected function getClassGroupName()
+    {
+        $classGroup = strtolower($this->getClassGroup());
+
+        if ('mage' === substr($classGroup, 0, 4)) {
+            $classGroup = substr($classGroup, 5, strlen($classGroup) - 5);
+        }
+
+        return $classGroup;
+    }
+
+
+    /**
+     * Retrieve helper module name
+     *
+     * @return string
+     */
+    protected function getClassGroup()
+    {
+        $className  = get_class($this);
+        $classGroup = substr($className, 0, strpos($className, '_', strpos($className, '_') + 1));
+
+        if (!class_exists($classGroup . '_Helper_Data')) {
+            $classGroup = 'Mage_Core';
+        }
+
+        return $classGroup;
+    }
+
+
+    /**
+     * Translate
+     *
+     * @return string
+     */
+    public function __()
+    {
+        $args = func_get_args();
+        $expr = new Mage_Core_Model_Translate_Expr(array_shift($args), $this->getClassGroup());
+        array_unshift($args, $expr);
+
+        return Mage::app()->getTranslator()->translate($args);
     }
 
 }

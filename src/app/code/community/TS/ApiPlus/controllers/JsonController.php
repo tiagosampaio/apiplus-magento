@@ -17,7 +17,8 @@ class TS_ApiPlus_JsonController extends TS_ApiPlus_Controller_Front_Action
 
     public function indexAction()
     {
-        $this->getApiRequest()->dispatch();
+        $apiRequest = $this->getApiRequest();
+        $apiRequest->dispatch();
     }
 
 }

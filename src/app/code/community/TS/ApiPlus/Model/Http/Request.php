@@ -49,18 +49,17 @@ class TS_ApiPlus_Model_Http_Request
     {
         if ($this->getUser()->getId() && $this->getUser()->getIsActive() != '1') {
 
-            $message = $this->helper()->__('Your account has been deactivated.');
+            $message = $this->__('Your account has been deactivated.');
             $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
 
         } elseif (!Mage::getModel('api/user')->hasAssigned2Role($this->getUser()->getId())) {
 
-            $message = $this->helper()->__('Access denied.');
+            $message = $this->__('Access denied.');
             $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
 
         } else {
-
             if (!$this->getUser()->getId()) {
-                $message = $this->helper()->__('Unable to login.');
+                $message = $this->__('Unable to login.');
                 $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
             }
 
@@ -140,6 +139,15 @@ class TS_ApiPlus_Model_Http_Request
     public function getResource()
     {
         if (empty($this->_resource)) {
+            $reflection = new ReflectionObject($this->getDecodedData());
+
+            if (false === $reflection->hasProperty('resource')) {
+                $this->sendHttpErrorResponse(
+                    TS_ApiPlus_Model_Http_Response::HTTP_METHOD_NOT_ALLOWED,
+                    $this->__('There is no resource method defined in your request. Please check it and try again.')
+                );
+            }
+
             $this->_resource = $this->getDecodedData()->resource;
         }
 
@@ -219,7 +227,8 @@ class TS_ApiPlus_Model_Http_Request
         $this->_user = Mage::getModel('api/user');
 
         if (false == $this->getUser()->authenticate($username, $apiKey)) {
-            $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED);
+            $message = $this->__('Your credentials are incorrect. Please verify the username and password.');
+            $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_UNAUTHORIZED, $message);
         }
 
         /** @var Mage_Api_Model_Session $session */

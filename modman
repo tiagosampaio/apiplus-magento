@@ -1,3 +1,4 @@
 src/app/code/community/TS/ApiPlus         app/code/community/TS/ApiPlus
 src/app/etc/modules/TS_ApiPlus.xml        app/etc/modules/TS_ApiPlus.xml
 src/app/locale/en_US/TS/ApiPlus           app/locale/en_US/TS/ApiPlus
+src/app/locale/pt_BR/TS/ApiPlus           app/locale/pt_BR/TS/ApiPlus

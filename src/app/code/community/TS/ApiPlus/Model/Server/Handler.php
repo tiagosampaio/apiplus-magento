@@ -146,7 +146,7 @@ class TS_ApiPlus_Model_Server_Handler extends Mage_Api_Model_Server_Handler
      */
     protected function _getDefaultHttpErrorMessage()
     {
-        return $this->helper()->__('There was a problem in the request.');
+        return $this->__('There was a problem in the request.');
     }
 
 
