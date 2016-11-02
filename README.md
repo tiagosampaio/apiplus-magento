@@ -85,11 +85,10 @@ If you need to send any arguments, like you do in SOAP request for some resource
 }
 ```
 
+## Links
+
+🇧🇷 [Novo Módulo Magento para Integração com API: API Plus!](http://tiagosampaio.com/novo-modulo-magento-para-integracao-com-api-api-plus/)
 
 ## License
 
-[MIT License](LICENSE.txt)
-
-## Links
-
-[Novo Módulo Magento para Integração com API: API Plus!](http://tiagosampaio.com/novo-modulo-magento-para-integracao-com-api-api-plus/)
+(c) 2016 [MIT License](LICENSE.txt) - [Tiago Sampaio](http://tiagosampaio.com/)
