@@ -247,7 +247,7 @@ class TS_ApiPlus_Model_Http_Request
      */
     protected function initRequestData()
     {
-        if (empty($this->getResource())) {
+        if (!($this->getResource())) {
             $this->sendHttpErrorResponse(TS_ApiPlus_Model_Http_Response::HTTP_BAD_REQUEST);
         }
 
