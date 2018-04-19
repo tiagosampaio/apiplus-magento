@@ -92,7 +92,7 @@ class TS_ApiPlus_Model_Http_Request
             $this->sendHttpErrorResponse($e->getCode(), $e->getMessage());
         }
 
-        $this->getHttpResponse()->sendResponse();
+        $this->getHttpResponse()->sendHeaders();
     }
 
 
